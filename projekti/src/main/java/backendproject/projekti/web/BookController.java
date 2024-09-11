@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import backendproject.projekti.domain.CategoryRepository;
 import backendproject.projekti.domain.Book;
 import backendproject.projekti.domain.BookRepository;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,13 +16,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 
 
-
-
 @Controller
 
 public class BookController {
         @Autowired
         private BookRepository repository;
+        @Autowired
+        private CategoryRepository crepository;
     
     @RequestMapping(value= {"/", "/booklist"})
     public String bookList(Model model){
@@ -36,6 +37,7 @@ public class BookController {
     @GetMapping("/addbook")
     public String addBook(Model model) {
         model.addAttribute("book", new Book());
+        model.addAttribute("categories", crepository.findAll());
         return "addbook";
     }
       @PostMapping("/savebook")
@@ -46,6 +48,7 @@ public class BookController {
     @RequestMapping("/editBook/{id}")
     public String editBook(@PathVariable("id") Long id, Model model) {
         model.addAttribute("editBook", repository.findById(id));
+        model.addAttribute("categories", crepository.findAll());
         return "editBook";
     }
     

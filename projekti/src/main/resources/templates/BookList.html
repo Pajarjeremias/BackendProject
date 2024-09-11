@@ -20,6 +20,7 @@
             <td th:text="${book.publicationYear}"></td>
             <td th:text="${book.isbn}"></td>
     		<td th:text="${book.price}"></td>   
+            <td th:text="${book.category?.name != null && book.category?.name != null ? book?.category?.name:'Unknown'}"></td>
             <td><a th:href="@{/delete/{id}(id=${book.id})}">Delete / </a></td>
 		    <td><a th:href="@{/editBook/{id}(id=${book.id})}">Edit book</a></td>
     	</tr>
