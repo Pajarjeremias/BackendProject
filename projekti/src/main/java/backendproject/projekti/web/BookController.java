@@ -12,8 +12,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+import java.util.Optional;
 
+import backendproject.projekti.domain.CategoryRepository;
+import backendproject.projekti.domain.Book;
+import backendproject.projekti.domain.BookRepository;
+
+/*import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;*/
 
 
 @Controller
@@ -33,6 +44,16 @@ public class BookController {
     public String ShowMeTheMainPage(Model model) {
         return "main";
     }
+    @RequestMapping(value="/books", method=RequestMethod.GET)
+    public @ResponseBody List<Book> bookListRest() {
+        return (List<Book>) repository.findAll();
+    }
+    @RequestMapping(value="book/{id}", method=RequestMethod.GET)
+    public @ResponseBody Optional<Book> findBookRest(@PathVariable("id") Long bookId) {
+        return repository.findById(bookId);
+    }
+    
+    
     
     @GetMapping("/addbook")
     public String addBook(Model model) {
@@ -51,6 +72,13 @@ public class BookController {
         model.addAttribute("categories", crepository.findAll());
         return "editBook";
     }
+    @PostMapping("/saveEditedBook")
+    public String saveEditedBook(Book book) {
+        /*log.info("CONTROLLER: Save edited book: " + book);*/
+        repository.save(book);
+        return "redirect:/booklist";
+    }
+    
     
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)

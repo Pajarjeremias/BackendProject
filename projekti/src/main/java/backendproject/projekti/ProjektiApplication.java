@@ -35,10 +35,10 @@ public class ProjektiApplication {
 			crepository.save(category3);
 			crepository.save(category4);
 
-			bookRepository.save(new Book("Harry Potter", "J.K Rowling", 1995, 1690, 10));
-			bookRepository.save(new Book("Lord of the Rings", "J.R.R. Tolkien", 1500, 1700, 20000));	
-			bookRepository.save(new Book("Rimakauhua ja rakkautta", "Herran haltuun", 2000, 12546, 20));
-			bookRepository.save(new Book("Tekoälyn perusteet", "en muista", 1996, 32566, 12));
+			bookRepository.save(new Book("Harry Potter", "J.K Rowling", 1995, 1690, 10, crepository.findByName("Fantasia").get(0)));
+			bookRepository.save(new Book("Lord of the Rings", "J.R.R. Tolkien", 1500, 1700, 20000, crepository.findByName("Fantasia").get(0)));	
+			bookRepository.save(new Book("Rimakauhua ja rakkautta", "Herran haltuun", 2000, 12546, 20, crepository.findByName("Komedia").get(0)));
+			bookRepository.save(new Book("Tekoälyn perusteet", "en muista", 1996, 32566, 12, crepository.findByName("Draama").get(0)));
 			log.info("fetch all books");
 			for (Book book : bookRepository.findAll()) {
 				log.info(book.toString());

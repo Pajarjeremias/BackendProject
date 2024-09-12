@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Book {
@@ -16,6 +17,7 @@ public class Book {
 
     @ManyToOne
     @JoinColumn(name = "categoryid")
+    @JsonIgnore
     private Category category;
     
     private String title;
@@ -28,12 +30,13 @@ public class Book {
         super();
     }
 
-    public Book(String title, String author, long publicationYear, long isbn, long price) {
+    public Book(String title, String author, long publicationYear, long isbn, long price, Category category) {
         this.title = title;
         this.author = author;
         this.publicationYear = publicationYear;
         this.isbn = isbn;
         this.price = price;
+        this.category = category;
     }
 
     public Long getId() {
@@ -91,6 +94,7 @@ public class Book {
     public void setCategory(Category category) {
         this.category = category;
     }
+    
     @Override
 	public String toString() {
 		if (this.category != null)
