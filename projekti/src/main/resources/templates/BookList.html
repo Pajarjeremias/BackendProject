@@ -13,10 +13,10 @@
         </div>
     </div>
 	<div class="col-md-4">
-        <span>Welcome <span sec:authentication="name">Welcome Name</span></span>
+        <h3>Welcome <span sec:authentication="name"></span>!</h3>
 		
 	
-	<h1>Books</h1>
+	<h3>Our list of books:</h3>
     <table class="table table-striped">
 		<tr>
 		    <th>Author</th>
@@ -24,7 +24,7 @@
             <th>Year</th>
 		    <th>ISBN</th>
             <th>Price</th>
-            <th sec:authorize="hasRole('ADMIN')"></th>
+            <th sec:authorize="hasAuthority('ADMIN')"></th>
 		</tr>  
     	<tr th:each = "book : ${books}">
     		<td th:text="${book.author}"></td>
@@ -33,8 +33,8 @@
             <td th:text="${book.isbn}"></td>
     		<td th:text="${book.price}"></td>   
             <td th:text="${book.category?.name != null && book.category?.name != null ? book?.category?.name:'Unknown'}"></td>
-            <td sec:authorize="hasRole('ADMIN')"><a th:href="@{/delete/{id}(id=${book.id})}" >Delete / </a></td>
-		    <td sec:authorize="hasRole('ADMIN')"><a th:href="@{/editBook/{id}(id=${book.id})}"class="btn btn-xs btn-danger">Edit book</a></td>
+            <td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/delete/{id}(id=${book.id})}" class="btn btn-xs btn-danger ">Delete / </a></td>
+		    <td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/editBook/{id}(id=${book.id})}"class="btn btn-xs btn-info ">Edit book</a></td>
     	</tr>
      </table>    	
      <a href="/addbook" class="btn btn-primary">Add New Book</a>

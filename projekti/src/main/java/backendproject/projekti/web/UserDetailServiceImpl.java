@@ -12,9 +12,13 @@ import backendproject.projekti.domain.AppUserRepository;
 
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {
-
+    private final AppUserRepository repository;
     @Autowired
-    AppUserRepository repository;
+    public UserDetailServiceImpl(AppUserRepository userRepository){
+        this.repository = userRepository;
+    }
+    /*@Autowired
+     AppUserRepository repository; */
 
 @Override
 public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
