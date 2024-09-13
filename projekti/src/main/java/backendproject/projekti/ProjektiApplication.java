@@ -12,6 +12,8 @@ import backendproject.projekti.domain.Book;
 import backendproject.projekti.domain.BookRepository;
 import backendproject.projekti.domain.Category;
 import backendproject.projekti.domain.CategoryRepository;
+import backendproject.projekti.domain.AppUser;
+import backendproject.projekti.domain.AppUserRepository;
 
 @SpringBootApplication
 public class ProjektiApplication {
@@ -21,7 +23,7 @@ public class ProjektiApplication {
 		SpringApplication.run(ProjektiApplication.class, args);
 	}
 	@Bean
-	public CommandLineRunner bookData(BookRepository bookRepository, CategoryRepository crepository){
+	public CommandLineRunner bookData(BookRepository bookRepository, CategoryRepository crepository, AppUserRepository urepository){
 		return(args) -> {
 			log.info("save a couple of students");
 			log.info("Save couple categories");
@@ -39,6 +41,18 @@ public class ProjektiApplication {
 			bookRepository.save(new Book("Lord of the Rings", "J.R.R. Tolkien", 1500, 1700, 20000, crepository.findByName("Fantasia").get(0)));	
 			bookRepository.save(new Book("Rimakauhua ja rakkautta", "Herran haltuun", 2000, 12546, 20, crepository.findByName("Komedia").get(0)));
 			bookRepository.save(new Book("Tekoälyn perusteet", "en muista", 1996, 32566, 12, crepository.findByName("Draama").get(0)));
+			
+			AppUser user1 = new AppUser("jukka", "$2a$10$bqeWuUoDJkMs07mVq9sFtO7.4.pzT6MsfbT4iG/ZJvob669JU.H3u", "USER");
+			AppUser user2 = new AppUser("jeremias", "$2a$10$Y.Pd7jlYfx.CXlBO9A9TPu.tJUMyfYyq8cj3irKYGFvqIk6Xt3fEu", "ADMIN");
+			AppUser user3 = new AppUser("USER", "$2a$10$yorU92/JIj2bfxDJzcwK8uQV7F1asYwu6l4605vyu0f/8.CH9.5/W", "USER");
+			AppUser user4 = new AppUser("ADMIN", "$2a$10$SZ/5p/0NykSduBUN8Krijeq.aWbTPSzwkorEvUHJEKDMxVqEuhXFi", "ADMIN");
+
+			urepository.save(user1);
+			urepository.save(user2);
+			urepository.save(user3);
+			urepository.save(user4);
+			
+			
 			log.info("fetch all books");
 			for (Book book : bookRepository.findAll()) {
 				log.info(book.toString());

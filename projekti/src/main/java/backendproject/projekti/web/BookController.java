@@ -1,5 +1,6 @@
 package backendproject.projekti.web;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +35,12 @@ public class BookController {
         private BookRepository repository;
         @Autowired
         private CategoryRepository crepository;
+
+
+    @RequestMapping(value="/login")
+    public String login(){
+        return "login";
+    }
     
     @RequestMapping(value= {"/", "/booklist"})
     public String bookList(Model model){
@@ -66,12 +73,14 @@ public class BookController {
         repository.save(book);
         return "redirect:booklist";
     } 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping("/editBook/{id}")
     public String editBook(@PathVariable("id") Long id, Model model) {
         model.addAttribute("editBook", repository.findById(id));
         model.addAttribute("categories", crepository.findAll());
         return "editBook";
     }
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/saveEditedBook")
     public String saveEditedBook(Book book) {
         /*log.info("CONTROLLER: Save edited book: " + book);*/
@@ -80,7 +89,7 @@ public class BookController {
     }
     
     
-
+    @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String deleteBook(@PathVariable("id") Long bookId, Model model) {
     	repository.deleteById(bookId);
