@@ -23,7 +23,7 @@ public class WebSecurityConfig {
 
 		http.authorizeHttpRequests(
 				authorize -> authorize
-				.requestMatchers("/","/mainpage").permitAll()
+				.requestMatchers("/","/mainpage", "/css/**").permitAll()
 				.anyRequest().authenticated()
 				)
 				.formLogin(formlogin -> 

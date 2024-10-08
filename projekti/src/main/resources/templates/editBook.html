@@ -4,10 +4,14 @@
     <title>Edit</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" />
+
+
+
 </head>
 <body>
-	<h1>Editing book information</h1>
-	<div>
+	
+	<div class="container mt-4">
+		<h2>Editing book information</h2>
 	<form th:object="${editBook}" th:action="@{/saveEditedBook}" action="#" method="post">
 		  	<input type="hidden" id="id" th:field="*{id}" />
 		  	<div>
@@ -36,7 +40,7 @@
 					<option th:each="category: ${categories}" th:value="${category.categoryid}" th:text="${category.name}"></option>
 				</select>
 			  </div>
-						
+			
 			<input type="submit" value="Save update"></input>
 		</form>
 	

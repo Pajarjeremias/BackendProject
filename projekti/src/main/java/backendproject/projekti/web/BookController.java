@@ -68,13 +68,13 @@ public class BookController {
         model.addAttribute("categories", crepository.findAll());
         return "addbook";
     }
-      @PostMapping("/savebook")
+      @RequestMapping(value ="/savebook", method = RequestMethod.POST)
     public String saveBook(@ModelAttribute Book book){
         repository.save(book);
         return "redirect:booklist";
     } 
    
-    @RequestMapping("/editBook/{id}")
+    @GetMapping("/editBook/{id}")
     @PreAuthorize("hasAuthority('ADMIN')") 
     public String editBook(@PathVariable("id") Long id, Model model) {
         model.addAttribute("editBook", repository.findById(id));
@@ -83,7 +83,7 @@ public class BookController {
     }
     
     @PostMapping("/saveEditedBook")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    /*@PreAuthorize("hasAuthority('ADMIN')")*/
     public String saveEditedBook(Book book) {
         /*log.info("CONTROLLER: Save edited book: " + book);*/
         repository.save(book);
